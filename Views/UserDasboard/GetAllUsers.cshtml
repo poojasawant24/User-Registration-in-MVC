@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MVC_Form.Models.UserDetails>
+
+@{
+    ViewBag.Title = "User Dashboard";
+}
+
+<h2>User Dashboard</h2>
+
+<table class="table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Date of Birth</th>
+        <th>Languages</th>
+        <th>Country</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.FirstName</td>
+            <td>@user.LastName</td>
+            <td>@user.Gender</td>
+            <td>@user.DateOfBirth</td>
+            <td>@string.Join(", ", user.Languages)</td>
+            <td>@user.Country</td>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="button" value="Edit" class="btn btn-warning"
+                               onclick="location.href='@Url.Action("EditUserDetails", "User", new { id = user.UserId })'" />
+                        <input type="button" value="Delete" class="btn btn-danger"
+                               onclick="confirmDelete('@Url.Action("Delete", "User", new { id = user.UserId })')" />
+                    </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    function confirmDelete(url) {
+        if (confirm("Are you sure you want to delete?")) {
+            window.location.href = url;
+        }
+    }
+</script>
+
+
+
+
